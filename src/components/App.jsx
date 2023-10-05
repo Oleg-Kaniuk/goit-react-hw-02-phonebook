@@ -5,6 +5,7 @@ import { MainContainer } from "./App.styled";
 
 import { ContactForm } from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
+import { Filter } from "./Filter/Filter";
 
 export class App extends Component {
   state = {
@@ -45,14 +46,29 @@ export class App extends Component {
     }));
   }
 
+  onChangeFilter = (evt) => {
+    const {value} = evt.currentTarget;
+    this.setState({ filter: value })
+  }
+
+   filterByName = () => {
+    const { contacts, filter } = this.state;
+    const lowerFilter = filter.toLowerCase();
+    return contacts.filter(({ name }) => 
+      (name.toLowerCase().includes(lowerFilter) ))
+  }
+
   render() {
+    const { filter } = this.state;
+    const visibleContacts = this.filterByName();
 
     return (
       <MainContainer>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.onSubmitForm} />
         <h2>Contacts</h2>
-        <ContactList onRemoveContact={this.removeContact} />
+        <Filter filter={filter} onChangeFilter={this.onChangeFilter} />
+        <ContactList onRemoveContact={this.removeContact} contacts={visibleContacts}/>
       </MainContainer>
     );
   };

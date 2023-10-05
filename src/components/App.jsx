@@ -4,6 +4,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { MainContainer } from "./App.styled";
 
 import { ContactForm } from "./ContactForm/ContactForm";
+import { ContactList } from "./ContactList/ContactList";
 
 export class App extends Component {
   state = {
@@ -38,6 +39,12 @@ export class App extends Component {
       name.toLowerCase() === obj.name.toLowerCase())
   }
 
+  removeContact = (contactId) => {
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(contact => contact.id !== contactId)
+    }));
+  }
+
   render() {
 
     return (
@@ -45,6 +52,7 @@ export class App extends Component {
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.onSubmitForm} />
         <h2>Contacts</h2>
+        <ContactList onRemoveContact={this.removeContact} />
       </MainContainer>
     );
   };

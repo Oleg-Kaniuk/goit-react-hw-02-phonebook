@@ -6,7 +6,7 @@ export const Contact = styled.li`
     align-items: center;
     width: 400px;
     padding: 10px;
-    border: 1px solid #31d37a;
+    border-bottom: 1px solid skyblue;
 `;
 
 export const ButtonRemove = styled.button`
